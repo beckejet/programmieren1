@@ -1,7 +1,7 @@
 package aufgabe1;
 
-public class HangmanGame {
-    final String yes = "y";
+class HangmanGame {
+
     HangmanConfigurator hangmanConfigurator = new HangmanConfigurator();
 
 
@@ -12,6 +12,7 @@ public class HangmanGame {
         LINEOUTPUT,
         GUESSINPUT,
         QUESSCOMPARE,
+        CHECKGAME,
         YOULOSE,
         YOUWIN,
         DONE,
@@ -19,7 +20,7 @@ public class HangmanGame {
     }
 
     State currentState = State.BEGIN;
-    public void begin(){
+    void begin(){
 
         while (true) {
             switch (currentState) {
@@ -49,9 +50,22 @@ public class HangmanGame {
 
                 case QUESSCOMPARE:
                     hangmanConfigurator.compareChar();
-                    currentState = State.YOUWIN;
+                    currentState = State.CHECKGAME;
                     break;
 
+                case CHECKGAME:
+                    int checkGame = hangmanConfigurator.checkGame();
+                    System.out.println(checkGame);
+                    if (checkGame == 2){
+                        currentState = State.YOUWIN;
+                        break;}
+                    else if ( checkGame == 0){
+                        currentState = State.YOULOSE;
+                    break;}
+                    else if( checkGame == 1){
+                        currentState = State.LINEOUTPUT;
+                     break;
+                    }
                 case YOUWIN:
                     hangmanConfigurator.youWin();
                     currentState = State.DONE;

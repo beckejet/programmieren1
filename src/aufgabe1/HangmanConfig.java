@@ -5,7 +5,7 @@ class HangmanConfig {
     String word = "";
     int counter = 0;
     String guess = "";
-    String end = "";
+    char[] lineWord ;
 
 
     void setWord(String word) {
@@ -22,16 +22,25 @@ class HangmanConfig {
     int getCounter(){
         return counter;
     }
-     void setGuess(String guess) {
-        int length = guess.length();
-         if (length == 1) {
+    void setGuess(String guess) {
+
+         if (guess.length() == 1) {
              this.guess = guess;
-         } else if (length > 1) {
+         } else {
              System.out.println("Bitte nur ein Buchstabe eingeben: ");
+             return;
          }
      }
      String getGuess(){
         return guess;
+     }
+     void setLineWord(String lineWordString){
+        char[] lineWord  = lineWordString.toCharArray();
+        this.lineWord = lineWord;
+
+     }
+     char[] getLineWord(){
+        return lineWord;
      }
 
 }

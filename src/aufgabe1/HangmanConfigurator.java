@@ -1,9 +1,8 @@
 package aufgabe1;
 
 import java.util.Scanner;
-import java.text.Collator;
 
-public class HangmanConfigurator {
+class HangmanConfigurator {
     HangmanConfig hangmanConfig = new HangmanConfig();
     Scanner input = new Scanner(System.in);
 
@@ -25,39 +24,59 @@ public class HangmanConfigurator {
         hangmanConfig.setCounter(counter);
     }
     void lineLength(){
-        System.out.println("Spieler 2: So viele Zeichen hat das Wort: ");
-        String wordString = hangmanConfig.getWord();
-        for (int i = 0; i < wordString.length() ; i++){
-            System.out.print("_ ");
+        System.out.println("Spieler 2: Das Wort hat " + hangmanConfig.getWord().length() + " Zeichen" );
+        System.out.println("Du hast " + hangmanConfig.getCounter() + " Versuche!, Viel Glueck!");
+        String temp = hangmanConfig.getWord();
+        hangmanConfig.setLineWord(temp);
+        char [] lineWord = hangmanConfig.getLineWord();
+        for (int i = 0; i < lineWord.length ; i++){
+            lineWord[i] = '_';
+            System.out.print(lineWord[i]);
+            System.out.print(" ");
         }
         System.out.println();
-        System.out.println("Du hast " + hangmanConfig.getCounter() + " Versuche!, Viel Glueck!");
+
+
     }
     void guessChar() {
         String guess = input.next();
         hangmanConfig.setGuess(guess);
-        int counter = hangmanConfig.getCounter();
-        for (int i = 0; i <= counter; i++) {
-            compareChar();
-
-
-        }
     }
+
     void compareChar(){
-        String compare = hangmanConfig.getGuess();
-        System.out.println("CompareChar");
-        String word = hangmanConfig.getWord();
-        System.out.println(word);
-        int same = word.compareToIgnoreCase(compare);
-        System.out.println(same);
-        if (same == 2){
-            guessChar();
+        char [] word = hangmanConfig.getWord().toCharArray();
+        char[] compare = hangmanConfig.getGuess().toCharArray();
+        for  (int i = 0; i <= compare.length -1; i++) {
+            if (compare[0] == word[i]) {
+                char[] lineWord = hangmanConfig.getLineWord();
+                lineWord[i] = compare[0];
+                hangmanConfig.setLineWord(lineWord.toString());
+                System.out.println(lineWord);
+            }
         }
+    }
+    int checkGame() {
+        char[] word = hangmanConfig.getWord().toCharArray();
+        char[] lineWord = hangmanConfig.getLineWord();
+
+        int counter = hangmanConfig.getCounter();
+        counter--;
+        hangmanConfig.setCounter(counter);
+        System.out.println(counter);
+        if ((word == lineWord) && (counter > 0)){
+            return 2;
+
+        }else if((word!= lineWord) && (counter == 0)){
+            return 0;} else  if ((lineWord != word )&& (counter > 0)) {
+            return 2;}
+        return 5;
 
     }
+
     void youWin(){
         System.out.println("Herzlichen Glückwunsch! Du hast das Wort erraten.");
     }
+
     void youLose(){
         System.out.println("Schade du hast verloren! ");
 
@@ -68,7 +87,6 @@ public class HangmanConfigurator {
         if (choice.equals("y")){
             return true;
         }else return false;
-
 
     }
 }
