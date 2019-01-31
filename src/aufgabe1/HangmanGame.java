@@ -2,17 +2,13 @@ package aufgabe1;
 
 class HangmanGame {
 
-    HangmanConfigurator hangmanConfigurator = new HangmanConfigurator();
-
-
     enum State {
         BEGIN,
-        WORDINPUT,
-        COUNTERINPUT,
+        CONFIGINPUT,
         LINEOUTPUT,
         GUESSINPUT,
-        QUESSCOMPARE,
-        CHECKGAME,
+        GUESSCOMPARE,
+
         YOULOSE,
         YOUWIN,
         DONE,
@@ -21,74 +17,69 @@ class HangmanGame {
 
     State currentState = State.BEGIN;
     void begin(){
+        HangmanStringCompare hangmanStringCompare = new HangmanStringCompare();
 
         while (true) {
             switch (currentState) {
+
                 case BEGIN:
-                    hangmanConfigurator.greet();
-                    currentState = State.WORDINPUT;
+                    HangmanConfigurator.greet();
+                    currentState = State.CONFIGINPUT;
                     break;
 
-                case WORDINPUT:
-                    hangmanConfigurator.input();
-                    currentState = State.COUNTERINPUT;
-                    break;
-                case COUNTERINPUT:
-                    hangmanConfigurator.counterInput();
+                case CONFIGINPUT:
+                    hangmanStringCompare.setWordArrayCounter();
                     currentState = State.LINEOUTPUT;
                     break;
 
                 case LINEOUTPUT:
-                    hangmanConfigurator.lineLength();
+                    hangmanStringCompare.showGuess();
                     currentState = State.GUESSINPUT;
                     break;
 
                 case GUESSINPUT:
-                    hangmanConfigurator.guessChar();
-                    currentState = State.QUESSCOMPARE;
+                    hangmanStringCompare.setGuessChar();
+                    currentState = State.GUESSCOMPARE;
                     break;
 
-                case QUESSCOMPARE:
-                    hangmanConfigurator.compareChar();
-                    currentState = State.CHECKGAME;
-                    break;
+                case GUESSCOMPARE:
 
-                case CHECKGAME:
-                    int checkGame = hangmanConfigurator.checkGame();
-                    System.out.println(checkGame);
-                    if (checkGame == 2){
-                        currentState = State.YOUWIN;
-                        break;}
-                    else if ( checkGame == 0){
-                        currentState = State.YOULOSE;
-                    break;}
-                    else if( checkGame == 1){
+                    hangmanStringCompare.guessArrayCompareArray();
+                    int statusGame = hangmanStringCompare.gameStatus();
+
+                    if (statusGame == 2) {
                         currentState = State.LINEOUTPUT;
-                     break;
+                        break;
+                    }else if (statusGame == 1){
+                        currentState = State.YOUWIN;
+                        break;
                     }
-                case YOUWIN:
-                    hangmanConfigurator.youWin();
-                    currentState = State.DONE;
+                    else currentState = State.YOULOSE;
+                    break;
 
+                case YOUWIN:
+                    HangmanConfigurator.youWin();
+                    currentState = State.DONE;
                     break;
 
                 case YOULOSE:
-                    hangmanConfigurator.youLose();
+                    HangmanConfigurator.youLose();
                     currentState = State.DONE;
                     break;
+
                 case DONE:
-                    boolean done = hangmanConfigurator.end();
+                    boolean done = HangmanEnd.end();
                     if (done == true){
                         currentState =State.BEGIN;
                         break;
                     }else {
-                    currentState = State.END;
-                    break;
-                }
+                        currentState = State.END;
+                        break;
 
-
+                    }
 
                 case END:
+                    HangmanConfigurator.goodbye();
                     return;
 
                 default:
