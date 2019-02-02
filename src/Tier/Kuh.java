@@ -1,18 +1,18 @@
 package Tier;
 
-public class Kuh extends Tier{
+public class Kuh extends LandTiere {
+
     private static final String sound = "Muuuh";
-    public Kuh(final String name){
+
+    public Kuh() {
+    }
+
+    public Kuh(final String name) {
         super(name);
-
-
     }
+
     @Override
-    public void sprechen(){
-        System.out.println(getName()+ sound);
+    public void sprechen() {
+        System.out.println(sagName() + sound);
     }
-    /*@Override
-    public Tier sprichMit(tier){
-        System.out.println();
-    }*/
 }

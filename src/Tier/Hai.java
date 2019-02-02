@@ -2,13 +2,13 @@ package Tier;
 
 import Tier.Tier;
 
-public class Fisch extends WasserTiere {
-     private static final String sound = "Blubb";
+public class Hai extends WasserTiere {
+    private static final String sound = "Blubb";
 
-    public Fisch() {
+    public Hai() {
     }
 
-    public Fisch(final String name) {
+    public Hai(final String name) {
         super(name);
     }
 
