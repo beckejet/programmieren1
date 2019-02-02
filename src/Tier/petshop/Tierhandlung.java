@@ -16,7 +16,7 @@ public class Tierhandlung {
         ERROR_STATE
     }
 
-    public void startPetShop() {
+    public  void startPetShop() {
         while (true) {
             switch (state) {
                 case START:
@@ -37,7 +37,9 @@ public class Tierhandlung {
                     break;
                 case SAY_GOODBYE:
                     currentBasket.getPetBasket().forEach(Tier::sprechen);
-                    break;
+                    return;
+
+                case ERROR_STATE:
                 default:
                     System.out.println("ERROR STATE!!!");
                     return;
@@ -47,6 +49,12 @@ public class Tierhandlung {
 
     private boolean chooseAnimal() {
         String type = petShopInput.getInput("Welches Tier Wollen sie kaufen ? ");
+        if (!currentBasket.isPetInStore(type)) {
+            System.out.println("Entschuldigung diese Tier haben wir nicht im Angebot bittw wählen sie zwischen folgenden aus:");
+            currentBasket.printAnimalsInStore();
+            System.out.println();
+            return false;
+        }
         String name = petShopInput.getInput("Wie soll es denn heiße??");
         return currentBasket.addPetToBasket(type, name);
     }
