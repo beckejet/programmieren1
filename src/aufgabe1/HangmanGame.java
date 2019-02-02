@@ -8,7 +8,6 @@ class HangmanGame {
         LINEOUTPUT,
         GUESSINPUT,
         GUESSCOMPARE,
-
         YOULOSE,
         YOUWIN,
         DONE,
@@ -75,7 +74,6 @@ class HangmanGame {
                     }else {
                         currentState = State.END;
                         break;
-
                     }
 
                 case END:
