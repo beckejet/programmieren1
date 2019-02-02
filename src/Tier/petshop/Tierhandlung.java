@@ -12,7 +12,8 @@ public class Tierhandlung {
         CHOOSE_ANIMAL,
         ASK_TO_PROCEED,
         PRICE_OF_BASKET,
-        SAY_GOODBYE
+        SAY_GOODBYE,
+        ERROR_STATE
     }
 
     public void startPetShop() {
