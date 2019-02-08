@@ -1,6 +1,6 @@
 package GenericInterfaceAufgabe3;
 
-import javax.xml.stream.events.Comment;
+import java.util.Scanner;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -9,6 +9,7 @@ public class Turnier{
     int roundNo =1;
     LinkedList<Fighter> listFighter = new LinkedList<>();
     LinkedList<Fighter> listWinner = new LinkedList<>();
+    BetBooth betBooth = new BetBooth();
 
 
 
@@ -31,6 +32,14 @@ public class Turnier{
         Commentator.greet();
         Commentator.introFighter(listFighter);
         System.out.println();
+        Scanner input = new Scanner(System.in);
+        System.out.print("Auf welchen Kaempfer (index) wollen sie wetten? ");
+        int index = input.nextInt();
+        System.out.print("Wieviel möchten sie wetten? ");
+        double einsatz = input.nextDouble();
+        betBooth.betStrength(index, einsatz, listFighter);
+        input.close();
+        Collections.shuffle(listFighter);
         noFights = Math.log(listFighter.size())/Math.log(2);
         if (listFighter.size() % 4 == 0) {
             for(int j = 0; j < noFights ; j+=0) {
@@ -40,13 +49,18 @@ public class Turnier{
                     listWinner.add(versus(listFighter.get(i), listFighter.get(i + 1)));
                     Commentator.announceWinner(listWinner, noFights);
                 }
-                listFighter.clear();
-                listFighter.addAll(listWinner);
-                listWinner.clear();
-                noFights --;
-                roundNo++;
+                nextRound();
             }
+            betBooth.checkBet(listFighter);
         }else System.out.println("Bitte gib eine Fighter Anzahl die durch vier teilbar ist....");
         return this;
+    }
+
+    private void nextRound() {
+        listFighter.clear();
+        listFighter.addAll(listWinner);
+        listWinner.clear();
+        noFights --;
+        roundNo++;
     }
 }
